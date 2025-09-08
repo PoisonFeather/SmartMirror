@@ -2,10 +2,9 @@ from PySide6 import QtWidgets, QtCore
 from ..theme import Theme
 from .clock import GlowLabel
 from ..services.weather_service import get_current_weather
-
-CITY = "Alba Iulia"   # schimbă aici
+# schimbă aici
 COUNTRY = "RO"        # sau None
-
+CITY_KEY = "Alba Iulia"  # alege din PRESET_CITIES
 class _WeatherWorker(QtCore.QObject):
     finished = QtCore.Signal(dict)
     error = QtCore.Signal(str)
@@ -13,7 +12,7 @@ class _WeatherWorker(QtCore.QObject):
     @QtCore.Slot()
     def run(self):
         try:
-            data = get_current_weather(CITY, COUNTRY)
+            data = get_current_weather(CITY_KEY)
             self.finished.emit(data)
         except Exception as e:
             self.error.emit(str(e))
@@ -39,7 +38,7 @@ class WeatherWidget(QtWidgets.QWidget):
         self.temp_label = GlowLabel("—°")
         self.temp_label.setStyleSheet(f"font-size: {self.scale.sp(56)}pt; font-weight: 300;")
 
-        self.desc_label = QtWidgets.QLabel(f"Se încarcă… · {CITY}")
+        self.desc_label = QtWidgets.QLabel(f"Se încarcă… · {CITY_KEY}")
         self.desc_label.setObjectName("subtitle")
         self.desc_label.setStyleSheet(f"font-size: {self.scale.sp(16)}pt;")
 
@@ -77,7 +76,7 @@ class WeatherWidget(QtWidgets.QWidget):
             return  # evită cereri simultane
         self._running = True
 
-        self.desc_label.setText(f"Se încarcă… · {CITY}")
+        self.desc_label.setText(f"Se încarcă… · {CITY_KEY}")
         self.extra_label.setText("—")
 
         self._thread = QtCore.QThread(self)
@@ -113,7 +112,7 @@ class WeatherWidget(QtWidgets.QWidget):
         d = data.get("desc") or "—"
         w = data.get("wind_kmh")
         h = data.get("humidity")
-        loc = data.get("location") or CITY
+        loc = data.get("location") or CITY_KEY
 
         self.temp_label.setText(f"{t}°" if t is not None else "—°")
         self.desc_label.setText(f"{d} · {loc}")
@@ -128,7 +127,7 @@ class WeatherWidget(QtWidgets.QWidget):
 
     @QtCore.Slot(str)
     def _on_error(self, msg: str):
-        self.desc_label.setText(f"Eroare meteo · {CITY}")
+        self.desc_label.setText(f"Eroare meteo · {CITY_KEY}")
         self.extra_label.setText("Verifică conexiunea la internet")
         print("weather error:", msg)
 

@@ -32,11 +32,6 @@ Fullscreen by default; press Esc or Q to quit.
 Notes
 Design optimized for two-way mirrors: near-black background, high-contrast text, subtle glow.
 
-Replace placeholder services with real data fetching.
-
-yaml
-Copy code
-
 ---
 
 ### `smart_mirror/__init__.py`
