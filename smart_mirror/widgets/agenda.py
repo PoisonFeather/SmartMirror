@@ -6,37 +6,36 @@ class AgendaWidget(QtWidgets.QWidget):
         self.scale = scale
         self.setProperty("class", "card")
 
-        layout = QtWidgets.QVBoxLayout(self)
-        layout.setContentsMargins(scale.px(24), scale.px(20), scale.px(24), scale.px(20))
-        layout.setSpacing(scale.px(10))
+        root = QtWidgets.QVBoxLayout(self)
+        root.setContentsMargins(scale.px(22), scale.px(18), scale.px(22), scale.px(18))
+        root.setSpacing(scale.px(10))
 
         title = QtWidgets.QLabel("Agenda Azi")
         title.setObjectName("title")
-        title.setStyleSheet(f"font-size: {scale.sp(22)}pt; font-weight: 500;")
+        title.setStyleSheet(f"font-size: {scale.sp(18)}pt; font-weight: 500;")
 
         self.list = QtWidgets.QVBoxLayout()
         self.list.setSpacing(scale.px(8))
+
+        root.addWidget(title)
+        root.addLayout(self.list)
+
         self.populate_dummy()
-
-        layout.addWidget(title)
-        layout.addLayout(self.list)
-
-        # TODO: integrate Google Calendar / local ICS
 
     def add_item(self, time_str: str, text: str):
         h = QtWidgets.QHBoxLayout()
-        lbl_time = QtWidgets.QLabel(time_str)
-        lbl_time.setObjectName("accent")
-        lbl_time.setStyleSheet(f"font-size: {self.scale.sp(16)}pt;")
+        h.setSpacing(self.scale.px(10))
 
-        lbl_text = QtWidgets.QLabel(text)
-        lbl_text.setObjectName("subtitle")
-        lbl_text.setStyleSheet(f"font-size: {self.scale.sp(16)}pt;")
+        time = QtWidgets.QLabel(time_str)
+        time.setObjectName("accent")
+        time.setStyleSheet(f"font-size: {self.scale.sp(16)}pt; font-weight: 500;")
 
-        h.addWidget(lbl_time)
-        h.addSpacing(self.scale.px(12))
-        h.addWidget(lbl_text)
-        h.addStretch(1)
+        txt = QtWidgets.QLabel(text)
+        txt.setObjectName("subtitle")
+        txt.setStyleSheet(f"font-size: {self.scale.sp(16)}pt;")
+
+        h.addWidget(time, 0)
+        h.addWidget(txt, 1)
         self.list.addLayout(h)
 
     def populate_dummy(self):
