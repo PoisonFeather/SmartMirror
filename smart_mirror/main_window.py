@@ -17,10 +17,10 @@ class MirrorWindow(QtWidgets.QMainWindow):
 
         central = QtWidgets.QWidget()
         grid = QtWidgets.QGridLayout(central)
-        outer = self.scale.px(80)
+        outer = self.scale.px(40)
         grid.setContentsMargins(outer, outer, outer, outer)
-        grid.setHorizontalSpacing(self.scale.px(48))
-        grid.setVerticalSpacing(self.scale.px(40))
+        grid.setHorizontalSpacing(self.scale.px(55))
+        grid.setVerticalSpacing(self.scale.px(45))
 
         left_col = QtWidgets.QVBoxLayout()
         left_col.setSpacing(self.scale.px(32))
@@ -29,7 +29,7 @@ class MirrorWindow(QtWidgets.QMainWindow):
         self.clockAnalog= AnalogClockWidget(self.scale, show_seconds=True)
         self.clock = ClockWidget(self.scale)
         left_col.addWidget(self.clockAnalog, 0)
-        left_col.addWidget(self.clock, 1)
+        left_col.addWidget(self.clock, 0)
 
         # Meteo sub ceas
         self.weather = WeatherWidget(self.scale)
@@ -53,5 +53,14 @@ class MirrorWindow(QtWidgets.QMainWindow):
 
     def keyPressEvent(self, event) -> None:
         if event.key() in (QtCore.Qt.Key_Escape, QtCore.Qt.Key_Q):
+
             QtWidgets.QApplication.quit()
         return super().keyPressEvent(event)
+
+def closeEvent(self, event):
+    try:
+        if hasattr(self, "weather") and self.weather:
+            self.weather.cleanup()
+    except Exception:
+        pass
+    super().closeEvent(event)

@@ -12,7 +12,7 @@ class AgendaWidget(QtWidgets.QWidget):
 
         title = QtWidgets.QLabel("Agenda Azi")
         title.setObjectName("title")
-        title.setStyleSheet(f"font-size: {scale.sp(18)}pt; font-weight: 500;")
+        title.setStyleSheet(f"font-size: {scale.sp(42)}pt; font-weight: 500;")
 
         self.list = QtWidgets.QVBoxLayout()
         self.list.setSpacing(scale.px(8))
@@ -24,15 +24,15 @@ class AgendaWidget(QtWidgets.QWidget):
 
     def add_item(self, time_str: str, text: str):
         h = QtWidgets.QHBoxLayout()
-        h.setSpacing(self.scale.px(10))
+        h.setSpacing(self.scale.px(20))
 
         time = QtWidgets.QLabel(time_str)
         time.setObjectName("accent")
-        time.setStyleSheet(f"font-size: {self.scale.sp(16)}pt; font-weight: 500;")
+        time.setStyleSheet(f"font-size: {self.scale.sp(45)}pt; font-weight: 500;")
 
         txt = QtWidgets.QLabel(text)
         txt.setObjectName("subtitle")
-        txt.setStyleSheet(f"font-size: {self.scale.sp(16)}pt;")
+        txt.setStyleSheet(f"font-size: {self.scale.sp(32)}pt;")
 
         h.addWidget(time, 0)
         h.addWidget(txt, 1)

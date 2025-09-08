@@ -15,7 +15,7 @@ class Theme:
         QWidget {{
             background-color: {Theme.BG};
             color: {Theme.TEXT_HI};
-            font-family: 'Inter', 'Roboto', 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
+            font-family: 'Roboto', 'SF Pro Display', 'Segoe UI', Arial, sans-serif;
             letter-spacing: 0.2px;
         }}
         QLabel#title {{ font-weight: 500; color: {Theme.TEXT_HI}; }}
